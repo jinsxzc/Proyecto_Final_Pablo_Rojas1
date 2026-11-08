@@ -34,3 +34,4 @@ test('login con contraseña incorrecta', async ({ page }) => {
   const ErrorMessage = page.getByText(/Credenciales incorrectas/i);
   await expect(ErrorMessage).toBeVisible();
 })
+//
