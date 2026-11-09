@@ -1,4 +1,3 @@
-// pages/LoginPage.js
 export class LoginPage {
   constructor(page) {
     this.page = page;
@@ -13,13 +12,12 @@ export class LoginPage {
     this.salesButton = page.getByRole('button', { name: 'Ventas' });
     this.cashboxButton = page.getByRole('button', { name: 'Caja' });
   }
-
+  //Ir a URL
   async goto() {
     await this.page.goto('/login?returnUrl=%2F/');
   }
-
+  //Rellenar credenciales
   async login(username, password) {
-    await this.goto();
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);
     await this.submitButton.click();
