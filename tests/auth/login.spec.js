@@ -1,29 +1,20 @@
-// tests/auth/login.spec.js
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/LoginPage';
+import { test, expect } from '../fixtures';
 
 test.describe("Autenticación", () => {
 
-  let paginalogin;
-
-  test.beforeEach(async ({ page }) => {
-    paginalogin = new LoginPage(page);
-    await paginalogin.goto();
-  });
-
-  test("inicio de sesion", async () => {
+  test("inicio de sesion", async ({paginalogin, credenciales}) => {
     // 1. Ejecutar el login
     await expect(paginalogin.page).toHaveURL('/login?returnUrl=%2F%2F');
-    await paginalogin.login(process.env.USER_NAME, process.env.USER_PASSWORD);
+    await paginalogin.login(credenciales.username, credenciales.password);
     // 2. Verificar que los botones de Ventas y Caja existen y son visibles
     await expect(paginalogin.salesButton).toBeVisible();
     await expect(paginalogin.cashboxButton).toBeVisible();
     await expect(paginalogin.page).toHaveURL(process.env.BASE_URL);
   });
 
-  test("usuario inválido", async () => {
+  test("usuario inválido", async ({paginalogin, credenciales}) => {
     // 1. Intenta login con el usuario erróneo inyectado desde el fixture/.env
-    await paginalogin.login(process.env.INCORRECT_USER, process.env.USER_PASSWORD);
+    await paginalogin.login(process.env.INCORRECT_USER, credenciales.password);
 
     // 2. Verifica la visibilidad del toast y su texto
     await expect(paginalogin.errorMessage).toBeVisible();
@@ -32,9 +23,9 @@ test.describe("Autenticación", () => {
     await expect(paginalogin.page).toHaveURL('/login?returnUrl=%2F%2F'); // Verifica que la URL no cambió
   });
 
-  test("contraseña inválida", async () => {
+  test("contraseña inválida", async ({paginalogin, credenciales}) => {
     // 1. Intenta iniciar sesión con usuario válido y contraseña incorrecta
-    await paginalogin.login(process.env.USER_NAME, process.env.INCORRECT_PASSWORD);
+    await paginalogin.login(credenciales.username, process.env.INCORRECT_PASSWORD);
 
     // 2. Verifica que el toast aparezca y contenga el texto esperado
     await expect(paginalogin.errorMessage).toBeVisible();
