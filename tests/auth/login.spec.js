@@ -1,32 +1,45 @@
 // tests/auth/login.spec.js
-import { test, expect } from "../fixtures";
+import { test, expect } from '@playwright/test';
+import { LoginPage } from '../../pages/LoginPage';
 
 test.describe("Autenticación", () => {
-  test("inicio de sesion", async ({ loginPage, credentials }) => {
-    // 1. Ejecutar el login
-    await loginPage.login(credentials.username, credentials.password);
 
-    // 2. Verificar que los botones de Ventas y Caja existen y son visibles
-    await expect(loginPage.salesButton).toBeVisible();
-    await expect(loginPage.cashboxButton).toBeVisible();
+  let paginalogin;
+
+  test.beforeEach(async ({ page }) => {
+    paginalogin = new LoginPage(page);
+    await paginalogin.goto();
   });
 
-  test("usuario inválido", async ({ loginPage, credentials }) => {
+  test("inicio de sesion", async () => {
+    // 1. Ejecutar el login
+    await expect(paginalogin.page).toHaveURL('/login?returnUrl=%2F%2F');
+    await paginalogin.login(process.env.USER_NAME, process.env.USER_PASSWORD);
+    // 2. Verificar que los botones de Ventas y Caja existen y son visibles
+    await expect(paginalogin.salesButton).toBeVisible();
+    await expect(paginalogin.cashboxButton).toBeVisible();
+    await expect(paginalogin.page).toHaveURL(process.env.BASE_URL);
+  });
+
+  test("usuario inválido", async () => {
     // 1. Intenta login con el usuario erróneo inyectado desde el fixture/.env
-    await loginPage.login(credentials.incorrectUser, credentials.password);
+    await paginalogin.login(process.env.INCORRECT_USER, process.env.USER_PASSWORD);
 
     // 2. Verifica la visibilidad del toast y su texto
-    await expect(loginPage.errorMessage).toBeVisible();
-    await expect(loginPage.errorMessage).toContainText("Credenciales incorrectas");
+    await expect(paginalogin.errorMessage).toBeVisible();
+    await expect(paginalogin.errorMessage).toContainText("Credenciales incorrectas");
+    await expect(paginalogin.errorMessage).not.toContainText("servidor");
+    await expect(paginalogin.page).toHaveURL('/login?returnUrl=%2F%2F'); // Verifica que la URL no cambió
   });
 
-  test("contraseña inválida", async ({ loginPage, credentials }) => {
+  test("contraseña inválida", async () => {
     // 1. Intenta iniciar sesión con usuario válido y contraseña incorrecta
-    await loginPage.login(credentials.username, credentials.incorrectPassword);
+    await paginalogin.login(process.env.USER_NAME, process.env.INCORRECT_PASSWORD);
 
     // 2. Verifica que el toast aparezca y contenga el texto esperado
-    await expect(loginPage.errorMessage).toBeVisible();
-    await expect(loginPage.errorMessage).toContainText("Credenciales incorrectas");
+    await expect(paginalogin.errorMessage).toBeVisible();
+    await expect(paginalogin.errorMessage).toContainText("Credenciales incorrectas");
+    await expect(paginalogin.errorMessage).not.toContainText("servidor"); //esta línea solo pasará el test debug pero si es que se presiona antes de que desaparezca la alerta
+    await expect(paginalogin.page).toHaveURL('/login?returnUrl=%2F%2F'); // Verifica que la URL no cambió
   });
-
 });

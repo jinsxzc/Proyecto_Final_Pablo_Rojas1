@@ -15,7 +15,7 @@ export class LoginPage {
   }
 
   async goto() {
-    await this.page.goto(process.env.BASE_URL || 'https://panel.qas.kipu.com.pe/');
+    await this.page.goto('/login?returnUrl=%2F/');
   }
 
   async login(username, password) {
