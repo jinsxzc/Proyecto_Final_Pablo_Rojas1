@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures';
 
 test.describe("Autenticación", () => {
 
-  test("inicio de sesion", async ({loginPage, credenciales}) => {
+  test("CP-AUTH-01: inicio de sesion", async ({loginPage, credenciales}) => {
     // 1. Ejecutar el login
     await expect(loginPage.page).toHaveURL('/login?returnUrl=%2F%2F');
     await loginPage.login(credenciales.username, credenciales.password);
@@ -12,7 +12,7 @@ test.describe("Autenticación", () => {
     await expect(loginPage.page).toHaveURL(process.env.BASE_URL);
   });
 
-  test("usuario inválido", async ({loginPage, credenciales}) => {
+  test("CP-AUTH-02: usuario inválido", async ({loginPage, credenciales}) => {
     // 1. Intenta login con el usuario erróneo inyectado desde el fixture/.env
     await loginPage.login(process.env.INCORRECT_USER, credenciales.password);
 
@@ -23,7 +23,7 @@ test.describe("Autenticación", () => {
     await expect(loginPage.page).toHaveURL('/login?returnUrl=%2F%2F'); // Verifica que la URL no cambió
   });
 
-  test("contraseña inválida", async ({loginPage, credenciales}) => {
+  test("CP-AUTH-03: contraseña inválida", async ({loginPage, credenciales}) => {
     // 1. Intenta iniciar sesión con usuario válido y contraseña incorrecta
     await loginPage.login(credenciales.username, process.env.INCORRECT_PASSWORD);
 
@@ -32,5 +32,12 @@ test.describe("Autenticación", () => {
     await expect(loginPage.errorMessage).toContainText("Credenciales incorrectas");
     await expect(loginPage.errorMessage).not.toContainText("servidor"); //esta línea solo pasará el test debug pero si es que se presiona antes de que desaparezca la alerta
     await expect(loginPage.page).toHaveURL('/login?returnUrl=%2F%2F'); // Verifica que la URL no cambió
+  });
+  test("CP-AUTH-04: cerrar sesión", async ({homePage, loginPage, credenciales}) => {
+    await loginPage.login(credenciales.username, credenciales.password);
+    await expect(loginPage.page).toHaveURL(process.env.BASE_URL);
+    await homePage.logout();
+    await expect(loginPage.page).toHaveURL(/login/)
+    await expect(loginPage.submitButton).toBeVisible();
   });
 });
