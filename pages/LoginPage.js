@@ -22,4 +22,9 @@ export class LoginPage {
     await this.passwordInput.fill(password);
     await this.submitButton.click();
   }
+  //Cerrar sesión
+  async logout() {
+    await this.page.getByRole('button', { name: /Menú de usuario/ }).click();
+    await this.page.getByRole('menuitem', { name: 'Cerrar Sesión' }).click();
+  }
 }

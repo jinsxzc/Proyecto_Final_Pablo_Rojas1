@@ -4,15 +4,18 @@ export class HomePage {
     this.page = page;
     // Botones del menú lateral post-login en Kipu:
     this.salesButton = page.getByRole('button', { name: 'Ventas' });
-    this.Ventas = page.getByRole('button', { name: 'Ventas' })
-    this.ventaRapidaLink = page.getByRole('link', { name: 'Venta rápida' });
+    this.quickSaleLink = page.getByRole('link', { name: 'Venta rápida' });
   }
 
-  async ventas() {
-    await this.Ventas.click();
+  async sales() {
+    await this.salesButton.click();
   }
 
-  async ventaRapida() {
-    await this.ventaRapidaLink.click();
+  async quickSale() {
+    await this.quickSaleLink.click();
   }
+  async logout() {
+    await this.page.getByRole('button', { name: /Menú de usuario/ }).click();
+    await this.page.getByRole('menuitem', { name: 'Cerrar Sesión' }).click();
+}
 }
