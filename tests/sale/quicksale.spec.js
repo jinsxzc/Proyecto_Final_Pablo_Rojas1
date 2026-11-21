@@ -6,9 +6,9 @@ const CUSTOMER_NAME = 'Nombre'
 
 
 
-test.describe("Quicksale", () => {
+test.describe("Venta rápida", () => {
 
-  test("Quicksale of normal product", async ({loginPage, credenciales, homePage, quickSalePage, issueReceiptPage, paymentMethodPage, saleDetailsPage}) => {
+  test("CP-VENTA-01: agregar producto y emitir comprobante", async ({loginPage, credenciales, homePage, quickSalePage, issueReceiptPage, paymentMethodPage, saleDetailsPage}) => {
     // Iniciar sesión
     await loginPage.login(credenciales.username, credenciales.password);
     // Dar click en Ventas y luego en venta rápida
