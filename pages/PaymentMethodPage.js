@@ -1,18 +1,14 @@
 import { expect } from '@playwright/test';
-export class PagoPage {
+export class PaymentMethodPage {
   constructor(page) {
     this.page = page; // Referencia a la página de Checkout
   }
   //Seleccionar 'Efectivo' como método de pago
-  async seleccionarEfectivo() {
+  async selectCash() {
     await this.page.getByRole('heading', { name: 'Efectivo' }).click();
   }
   //Dar click en 'Emitir comprobante'
-  async emitirComprobante() {
+  async issueReceipt() {
     await this.page.getByRole('button', { name: 'Emitir comprobante' }).click();
-  }
-  //Verificar URL de página de pago
-  async verifyppurl() {
-    await expect(this.page).toHaveURL(/sales\/fast-create/);
   }
 }

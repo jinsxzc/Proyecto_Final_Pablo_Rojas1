@@ -1,16 +1,16 @@
 import { test as base, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
-import { DatosVentaPage } from '../pages/DatosVentaPage';
-import { InvoicePage } from '../pages/InvoicePage';
-import { PagoPage } from '../pages/PagoPage';
-import { VentaRapidaPage } from '../pages/VentaRapidaPage';
+import { SaleDetailsPage } from '../pages/SaleDetailsPage';
+import { IssueReceiptPage } from '../pages/IssueReceiptPage';
+import { PaymentMethodPage } from '../pages/PaymentMethodPage';
+import { QuickSalePage } from '../pages/QuickSalePage';
 import { HomePage } from '../pages/HomePage';
 
 export const test = base.extend({
-    paginalogin: async ({ page }, use) => {
-        const paginalogin = new LoginPage(page);
-        await paginalogin.goto();
-        await use(paginalogin);
+    loginPage: async ({ page }, use) => {
+        const loginPage = new LoginPage(page);
+        await loginPage.goto();
+        await use(loginPage);
     },
     //Rellenar credenciales sacadas del .env
     credenciales:async ({}, use) => {
@@ -22,17 +22,17 @@ export const test = base.extend({
     homePage: async ({ page }, use) => {
         await use( new HomePage(page));
     },
-    invoicePage: async ({ page }, use) => {
-        await use( new InvoicePage(page));
+    issueReceiptPage: async ({ page }, use) => {
+        await use( new IssueReceiptPage(page));
     },
-    ventaRapidaPage: async ({ page }, use) => {
-        await use( new VentaRapidaPage(page));
+    quickSalePage: async ({ page }, use) => {
+        await use( new QuickSalePage(page));
     },
-    pagoPage: async ({ page }, use) => {
-        await use( new PagoPage(page));
+    paymentMethodPage: async ({ page }, use) => {
+        await use( new PaymentMethodPage(page));
     },
-    datosVentaPage: async ({ page }, use) => {
-        await use( new DatosVentaPage(page));
+    saleDetailsPage: async ({ page }, use) => {
+        await use( new SaleDetailsPage(page));
     },
 });
 //exportar todo este expect
