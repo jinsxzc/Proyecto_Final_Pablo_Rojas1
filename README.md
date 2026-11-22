@@ -15,12 +15,16 @@ Playwrigh-report: reportes de playwright
 test-results: resultados de cada test
 tests: fixtures.js y carpetas de tests:
 tests/auth: test de login
-tests/sale: tests de venta(VentaRápida y Ventadesalón)
-tests/cashregister: tests de cierre de caja
+tests/sale: test de venta rápida
+tests/products: tests de crear producto
 
 Correr las pruebas entre las 10:00hr y 21:00hr porque el servidor no está habilitado fuera de ese rango de horas.
 Ocasionalmente, se habilita el servidor fuera de ese horario así que también podrías intentar.
 
 Flujos automatizados hasta el momento:
 Inicio de Sesión(login.spec)
-Venta Rápida(quicksale)
+Venta Rápida(quicksale.spec)
+Crear Producto(createproduct.spec)
+
+venta rápida tiene array de 4 productos y su data-quicksale.json en la carpeta test-data
+crear producto tiene array de 2 Casos de Prueba y su data-minimumprice.json en la carpeta test-data (Es para validar si el campo "Precio mínimo" funciona correctamente cuando es mayor/menor que el "Precio de venta")

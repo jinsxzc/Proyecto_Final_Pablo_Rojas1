@@ -1,0 +1,26 @@
+[
+  {
+    "id": "CP-VENTA-01",
+    "name": "agregar producto Wanta y emitir comprobante",
+    "productName": "Wanta",
+    "customerName": "Nombre"
+  },
+  {
+    "id": "CP-VENTA-02",
+    "name": "agregar producto Ceviche y emitir comprobante",
+    "productName": "Ceviche",
+    "customerName": "Nombre"
+  },
+  {
+    "id": "CP-VENTA-03",
+    "name": "agregar producto Cubiert Mad y emitir comprobante",
+    "productName": "Cubiert Mad",
+    "customerName": "Nombre"
+  },
+  {
+    "id": "CP-VENTA-04",
+    "name": "agregar producto Porc Arroz y emitir comprobante",
+    "productName": "Porc Arroz",
+    "customerName": "Nombre"
+  }
+]

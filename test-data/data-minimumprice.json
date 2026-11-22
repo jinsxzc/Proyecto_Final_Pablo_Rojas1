@@ -1,0 +1,14 @@
+[
+  {
+    "id": "CP-PROD-01",
+    "name": "Precio mínimo mayor al precio de venta muestra error",
+    "minimumPrice": "21",
+    "isValid": false
+  },
+  {
+    "id": "CP-PROD-02",
+    "name": "Precio mínimo menor al precio de venta crea el producto",
+    "minimumPrice": "15",
+    "isValid": true
+  }
+]
